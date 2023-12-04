@@ -5,7 +5,6 @@ const cookieSession = require("cookie-session");
 require("./models/User");
 require("./services/passport");
 const authRouter = require("./routes/authRoutes");
-const keys = require("./config/keys");
 const passport = require("passport");
 
 mongoose
