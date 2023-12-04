@@ -5,7 +5,7 @@ const authRouter = require("./routes/authRoutes");
 const keys = require("./config/keys");
 
 mongoose
-  .connect(keys.mongoURI)
+  .connect(process.env.MONGO_URI || keys.mongoURI)
   .then((mng) => console.log("connected to mongodb database..."))
   .catch((reason) => console.log("connection to database failed..."));
 
