@@ -26,6 +26,10 @@ app.use(passport.session());
 
 app.use("/auth", authRouter);
 
+app.get("/api/current_user", (req, res) => {
+  res.send(req.user);
+});
+
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => {

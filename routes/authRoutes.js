@@ -1,11 +1,6 @@
 const passport = require("passport");
 const router = require("express").Router();
 
-const middleware_test = (req, res, next) => {
-  console.log("IM HERE");
-  next();
-};
-
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -13,15 +8,15 @@ router.get(
   })
 );
 
-router.get("/google/callback", passport.authenticate("google"));
+router.get("/google/callback", passport.authenticate("google"),(req,res) => {
+  res.redirect('/surveys');
+});
 
 router.get("/logout", (req, res) => {
   req.logOut();
-  res.send(req.user);
+  res.redirect('/');
 });
 
-router.get("/api/user", (req, res) => {
-  res.send(req.user);
-});
+
 
 module.exports = router;
