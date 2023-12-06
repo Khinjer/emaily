@@ -7,8 +7,8 @@ import {
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
-export default function CheckoutForm()  {
-  const [clientSecret, setClientSecret] = useState("");
+export default function CheckoutForm() {
+  const [clientSecret, setClientSecret] = useState(null);
 
   useEffect(() => {
     // Create a Checkout Session as soon as the page loads
@@ -31,4 +31,4 @@ export default function CheckoutForm()  {
       )}
     </div>
   );
-};
+}

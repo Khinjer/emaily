@@ -12,7 +12,6 @@ export default function Landing() {
         <div className="row center">
           <Link
             to="/checkout"
-            id="download-button"
             className="btn-large waves-effect waves-light orange"
           >
             Add Credit

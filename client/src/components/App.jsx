@@ -21,7 +21,7 @@ function App(props) {
           <Landing />
         </Route>
         <Route path="/surveys">surveys</Route>
-        <Stripe/>
+        <Stripe />
       </main>
       <Footer />
     </BrowserRouter>

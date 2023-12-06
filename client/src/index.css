@@ -7,3 +7,33 @@
 main {
   flex: 1 0 auto;
 }
+
+header .credit {
+  font-size: 18px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  width: 120px;
+  justify-content: center;
+  font-weight: bold;
+}
+
+header .logout {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#checkout{
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.checkout-btn{
+  font-size: 18px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  width: 200px;
+  justify-content: center;
+  font-weight: bold;
+}

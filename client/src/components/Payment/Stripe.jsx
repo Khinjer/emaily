@@ -5,10 +5,10 @@ import Return from "./Return";
 const Stripe = () => {
   return (
     <div>
-        <Route path="/checkout"> <CheckoutForm /> </Route>
-        <Route path="/return" > <Return /> </Route>
+      <Route path="/checkout" component={CheckoutForm} />
+      <Route path="/return" component={Return} />
     </div>
-  )
-}
+  );
+};
 
 export default Stripe;

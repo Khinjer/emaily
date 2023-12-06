@@ -20,23 +20,43 @@ function Header(props) {
         );
       default:
         return (
+          <>
           <li>
-            <a className="" href="/auth/logout">
-              <i className="material-icons left">power_settings_new</i>Logout
-            </a>
+          <Link
+            to="/checkout"
+            className="checkout-btn btn waves-effect waves-light black"
+          >
+            Add Credit
+          </Link>
           </li>
+            <li>
+              <span className="credit badge orange white-text">
+                Credit : {props.auth.credit}
+              </span>
+            </li>
+            <li>
+              <a className="logout" href="/auth/logout">
+                <i className="material-icons left">power_settings_new</i>Logout
+              </a>
+            </li>
+          </>
         );
     }
   };
 
   return (
     <header>
-      <nav className="teal">
+      <nav className="teal" style={{ fontSize: "24px" }}>
         <div className="nav-wrapper  container">
           <Link to={props.auth ? "/surveys" : "/"} className="left brand-logo">
             Emaîly
           </Link>
-          <ul className="right">{renderContent()}</ul>
+          <ul
+            className="right"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            {renderContent()}
+          </ul>
         </div>
       </nav>
     </header>
