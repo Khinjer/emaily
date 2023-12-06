@@ -6,7 +6,6 @@ const router = require("express").Router();
 const stripe = require("stripe")(
   "sk_test_51OKHwuK4jrm1oK3cvXdlwkUy78EwVKTaUEkm7p91MU5ZT2z0qqymQBAyBH56i59gp6a8aZcqxtQTrmgGrgpy5G7700gz2oQtbO"
 );
-const YOUR_DOMAIN = "http://localhost:5173";
 
 router.post("/create-checkout-session", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -19,8 +18,7 @@ router.post("/create-checkout-session", async (req, res) => {
       },
     ],
     mode: "payment",
-    return_url: `${req.baseUrl}/return?session_id={CHECKOUT_SESSION_ID}`,
-    //return_url: `${YOUR_DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
+    return_url: `${req.hostname}/return?session_id={CHECKOUT_SESSION_ID}`,
   });
   res.send({ clientSecret: session.client_secret });
 });
