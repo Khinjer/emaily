@@ -6,6 +6,7 @@ export const fetchUser = () => async (dispatch) => {
   dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const updateCredit = (credit) => {
-  return { type: UPDATE_CREDIT, payload: credit };
+export const updateCredit = (user) => (dispatch) => {
+  dispatch({type: FETCH_USER, payload: user});
+  return { type: UPDATE_CREDIT, payload: user.credit };
 };

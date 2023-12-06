@@ -18,7 +18,7 @@ function Return(props) {
         console.log(data);
         setStatus(data.status);
         setCustomerEmail(data.customer_email);
-        props.updateCredit(data.newUser.credit);
+        props.updateCredit(data.newUser);
       });
   }, []);
 
