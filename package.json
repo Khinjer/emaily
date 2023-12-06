@@ -7,7 +7,9 @@
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm run dev --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "prebuild": "npm run build --prefix client",
+    "build": "npm install"
   },
   "author": "",
   "license": "ISC",
