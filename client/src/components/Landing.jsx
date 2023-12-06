@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Landing() {
   return (
@@ -9,13 +10,13 @@ export default function Landing() {
           <h5 className="header col s12 light">Get feedback from your users</h5>
         </div>
         <div className="row center">
-          <a
-            href="#"
+          <Link
+            to="/checkout"
             id="download-button"
             className="btn-large waves-effect waves-light orange"
           >
-            Get Started
-          </a>
+            Add Credit
+          </Link>
         </div>
       </div>
       <div className="container">

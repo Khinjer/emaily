@@ -22,7 +22,7 @@ function Header(props) {
         return (
           <li>
             <a className="" href="/auth/logout">
-              <i class="material-icons left">power_settings_new</i>Logout
+              <i className="material-icons left">power_settings_new</i>Logout
             </a>
           </li>
         );

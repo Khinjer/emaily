@@ -14,6 +14,11 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+     "^/stripe/.*": {
+        target: "http://localhost:5000",
+        secure: false,
+        ws: true,
+      },
     },
     port: 5173,
   },

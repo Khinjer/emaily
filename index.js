@@ -5,6 +5,7 @@ const cookieSession = require("cookie-session");
 require("./models/User");
 require("./services/passport");
 const authRouter = require("./routes/authRoutes");
+const stripeRouter = require("./routes/stripeRoutes");
 const passport = require("passport");
 
 mongoose
@@ -25,6 +26,8 @@ app.use(passport.session());
 
 
 app.use("/auth", authRouter);
+
+app.use("/stripe",stripeRouter);
 
 app.get("/api/current_user", (req, res) => {
   res.send(req.user);

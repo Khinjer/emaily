@@ -7,6 +7,7 @@ import "../index.css";
 import Header from "./Header";
 import Landing from "./Landing";
 import Footer from "./Footer";
+import Stripe from "./Payment/Stripe";
 
 function App(props) {
   useEffect(() => {
@@ -20,6 +21,7 @@ function App(props) {
           <Landing />
         </Route>
         <Route path="/surveys">surveys</Route>
+        <Stripe/>
       </main>
       <Footer />
     </BrowserRouter>
