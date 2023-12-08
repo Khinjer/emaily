@@ -3,6 +3,7 @@ const Survey = require("mongoose").model("surveys");
 const mongoose = require("mongoose");
 const mailService = require("../services/mailgun");
 const requireLogin = require("../middleware/requireLogin");
+const requireCredit = require("../middleware/requireCredit");
 const acceptedAnswers = ["yes", "no", "okay"];
 
 const formatRecipients = (recipients) => {
@@ -23,8 +24,7 @@ const recipientsVariables = (recipients) => {
   return recipientsVariables;
 };
 
-router.post("/", requireLogin, async (req, res) => {
-  console.log(req.user);
+router.post("/", requireLogin, requireCredit, async (req, res) => {
   const { title, subject, body } = req.body;
   const formattedRecipients = formatRecipients(req.body.recipients);
   const survey = new Survey({
@@ -48,6 +48,8 @@ router.post("/", requireLogin, async (req, res) => {
   const sent = await mailService.sendMail(data);
 
   if (sent) {
+    req.user.credit-=1;
+    await req.user.save();
     await survey.save();
     return res.status(201).send(survey);
   }
@@ -55,7 +57,7 @@ router.post("/", requireLogin, async (req, res) => {
   return res.status(400).send("something went wrong!");
 });
 
-router.get("/list",requireLogin, async (req, res) => {
+router.get("/list", requireLogin, async (req, res) => {
   const surveyList = await Survey.find({});
   console.log(surveyList);
   res.status(200).json(surveyList);
