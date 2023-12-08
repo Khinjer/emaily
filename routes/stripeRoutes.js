@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const requireLogin = require('../middleware/requireLogin');
 
 //const User = require('mongoose').model('users');
 
@@ -7,7 +8,7 @@ const stripe = require("stripe")(
   "sk_test_51OKHwuK4jrm1oK3cvXdlwkUy78EwVKTaUEkm7p91MU5ZT2z0qqymQBAyBH56i59gp6a8aZcqxtQTrmgGrgpy5G7700gz2oQtbO"
 );
 
-router.post("/create-checkout-session", async (req, res) => {
+router.post("/create-checkout-session", requireLogin, async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded",
     line_items: [
@@ -23,7 +24,7 @@ router.post("/create-checkout-session", async (req, res) => {
   res.send({ clientSecret: session.client_secret });
 });
 
-router.get("/session-status", async (req, res) => {
+router.get("/session-status", requireLogin, async (req, res) => {
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
   const paid = req.user.paiments.indexOf(session.id);
 

@@ -2,7 +2,8 @@ const router = require("express").Router();
 const Survey = require("mongoose").model("surveys");
 const mongoose = require("mongoose");
 const mailService = require("../services/mailgun");
-const acceptedAnswers = ['yes','no','okay'];
+const requireLogin = require("../middleware/requireLogin");
+const acceptedAnswers = ["yes", "no", "okay"];
 
 const formatRecipients = (recipients) => {
   const recipientsArray = recipients.split(",");
@@ -22,7 +23,7 @@ const recipientsVariables = (recipients) => {
   return recipientsVariables;
 };
 
-router.post("/", async (req, res) => {
+router.post("/", requireLogin, async (req, res) => {
   console.log(req.user);
   const { title, subject, body } = req.body;
   const formattedRecipients = formatRecipients(req.body.recipients);
@@ -54,34 +55,31 @@ router.post("/", async (req, res) => {
   return res.status(400).send("something went wrong!");
 });
 
-router.get("/list", async (req, res) => {
+router.get("/list",requireLogin, async (req, res) => {
   const surveyList = await Survey.find({});
   console.log(surveyList);
   res.status(200).json(surveyList);
 });
 
 router.get("/feedback/:surveyid/:answer/:recipient", async (req, res) => {
+  const { surveyid, answer, recipient } = req.params;
 
-  const { surveyid, answer, recipient} = req.params;
- 
   const survey = await Survey.findById(surveyid);
-  if(!survey || !acceptedAnswers.includes(answer)){
+  if (!survey || !acceptedAnswers.includes(answer)) {
     return res.status(400).send("bad request");
   }
   const recipientData = survey.recipients.find(
-    (data) => (data._id.toString() === recipient.toString())
+    (data) => data._id.toString() === recipient.toString()
   );
 
-
-  if(recipientData.clicked === false){
+  if (recipientData.clicked === false) {
     recipientData.clicked = true;
     recipientData.answer = answer;
     await survey.save();
     res.send("Thank you for your feedback!");
-  }else{
+  } else {
     res.send("You've already sent your feedback Thank you :)");
   }
-
 });
 
 module.exports = router;
