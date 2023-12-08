@@ -26,18 +26,17 @@ router.post("/create-checkout-session", async (req, res) => {
 router.get("/session-status", async (req, res) => {
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
   const paid = req.user.paiments.indexOf(session.id);
-  let user;
 
   if (session.status === "complete" && paid < 0) {
     req.user.credit += 5;
     req.user.paiments.push(session.id);
-    user = await req.user.save();
+    req.user = await req.user.save();
   }
 
   res.send({
     status: session.status,
     customer_email: session.customer_details.email,
-    newUser: user,
+    newUser: req.user,
   });
 });
 

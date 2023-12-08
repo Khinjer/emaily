@@ -8,5 +8,5 @@ export const fetchUser = () => async (dispatch) => {
 
 export const updateCredit = (user) => (dispatch) => {
   dispatch({type: FETCH_USER, payload: user});
-  return { type: UPDATE_CREDIT, payload: user.credit };
+  return { type: UPDATE_CREDIT, payload: user.credit};
 };

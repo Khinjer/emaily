@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import axios from "axios";
 import * as actions from "../../actions";
 
 function Return(props) {
@@ -12,14 +13,18 @@ function Return(props) {
     const urlParams = new URLSearchParams(queryString);
     const sessionId = urlParams.get("session_id");
 
-    fetch(`/stripe/session-status?session_id=${sessionId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setStatus(data.status);
-        setCustomerEmail(data.customer_email);
-        props.updateCredit(data.newUser);
-      });
+    const getSessionStatus = async () =>{
+      const res = await axios.get(
+        `/stripe/session-status?session_id=${sessionId}`
+      );
+  
+      setStatus(res.data.status);
+      setCustomerEmail(res.data.customer_email);
+      props.fetchUser();
+    }
+
+    getSessionStatus();
+
   }, []);
 
   if (status === "open") {
