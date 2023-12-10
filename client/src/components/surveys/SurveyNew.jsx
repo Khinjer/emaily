@@ -3,9 +3,11 @@ import axios from "axios";
 import { reduxForm } from "redux-form";
 import SurveyForm from "./SurveyForm";
 import SurveyReview from "./SurveyReview";
+import Loader from "../Loader";
 
 function SurveyNew() {
   const [showReview, setShowReview] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const handleSubmit = async (values) => {
     try {
@@ -15,16 +17,24 @@ function SurveyNew() {
     }
   };
 
+  const renderContent = () =>{
+    if(showReview){
+      return    <SurveyReview
+      handleShowLoader={() => {setShowLoader(true); setShowReview(false);}}
+      handleBack={() => setShowReview(false)}
+    />
+    }
+      
+    if(showLoader){
+      return <Loader/>;
+    }else{
+      return <SurveyForm handleNext={() => setShowReview(true)} />;
+    }
+    }
+
   return (
     <div className="container">
-      {showReview ? (
-        <SurveyReview
-          //handleSubmit={handleSubmit}
-          handleBack={() => setShowReview(false)}
-        />
-      ) : (
-        <SurveyForm handleNext={() => setShowReview(true)} />
-      )}
+      {renderContent()}
     </div>
   );
 }

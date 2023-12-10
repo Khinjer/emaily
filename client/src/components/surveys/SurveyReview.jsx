@@ -36,7 +36,10 @@ function SurveyReview(props) {
         >
           back
         </button>
-        <button onClick={() => props.submitSurvey(values, history)} className="green btn-flat white-text right">
+        <button onClick={() => { 
+          props.submitSurvey(values, history);
+            props.handleShowLoader();
+           }} className="green btn-flat white-text right">
           Send
           <i className="material-icons right">send</i>
         </button>

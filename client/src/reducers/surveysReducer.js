@@ -1,10 +1,10 @@
-import { FETCH_SURVEYS } from "../actions";
+import { FETCH_SURVEYS } from "../actions/types";
 
-export default surveysReducers = (state = [], action) => {
+export default function surveysReducer(state = [], action) {
   switch (action.type) {
     case FETCH_SURVEYS:
       return action.payload;
     default:
       return state;
   }
-};
+}
