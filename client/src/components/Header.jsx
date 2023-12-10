@@ -24,9 +24,12 @@ function Header(props) {
           <li>
           <Link
             to="/checkout"
-            className="checkout-btn btn waves-effect waves-light black"
+            className="checkout-btn"
           >
-            Add Credit
+                  <button className="btn waves-effect waves-light right black" type="submit">
+        Add Credit
+        <i className="material-icons right">done</i>
+      </button>
           </Link>
           </li>
             <li>
