@@ -8,6 +8,8 @@ import Header from "./Header";
 import Landing from "./Landing";
 import Footer from "./Footer";
 import Stripe from "./Payment/Stripe";
+import Dashboard from "./Dashboard";
+import SurveyNew from "./surveys/SurveyNew";
 
 function App(props) {
   useEffect(() => {
@@ -20,7 +22,8 @@ function App(props) {
         <Route path="/" exact>
           <Landing />
         </Route>
-        <Route path="/surveys">surveys</Route>
+        <Route path="/surveys" component={Dashboard} exact></Route>
+        <Route path="/surveys/new" component={SurveyNew}></Route>
         <Stripe />
       </main>
       <Footer />

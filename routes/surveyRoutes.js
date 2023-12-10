@@ -49,9 +49,9 @@ router.post("/", requireLogin, requireCredit, async (req, res) => {
 
   if (sent) {
     req.user.credit-=1;
-    await req.user.save();
     await survey.save();
-    return res.status(201).send(survey);
+    const user =  await req.user.save();
+    return res.status(201).send(user);
   }
 
   return res.status(400).send("something went wrong!");

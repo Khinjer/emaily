@@ -8,23 +8,24 @@ function Return(props) {
   const [status, setStatus] = useState(null);
   const [customerEmail, setCustomerEmail] = useState("");
 
-  useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const sessionId = urlParams.get("session_id");
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const sessionId = urlParams.get("session_id");
 
-    const getSessionStatus = async () =>{
+  useEffect(() => {
+    const getSessionStatus = async () => {
       const res = await axios.get(
         `/stripe/session-status?session_id=${sessionId}`
       );
-  
+
       setStatus(res.data.status);
       setCustomerEmail(res.data.customer_email);
-      props.fetchUser();
-    }
+      if (res.data.status === "complete") {
+        props.fetchUser();
+      }
+    };
 
     getSessionStatus();
-
   }, []);
 
   if (status === "open") {
