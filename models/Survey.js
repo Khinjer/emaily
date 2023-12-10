@@ -14,7 +14,15 @@ const surveySchema = new Schema(
     user: {
         type: Schema.Types.ObjectId,
         ref: "User"
-    }
+    },
+    yes: {
+      type: Number,
+      default : 0
+    },
+    no: {
+      type: Number,
+      default : 0
+    } 
   },
   {
     timestamps: true,

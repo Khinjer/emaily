@@ -12,12 +12,19 @@ async function sendMail(data) {
   const recipients = data.recipients;
   const recipientsVariables = data.recipientsVariables;
 
+  /* 
+    a workaround so we don't waste one email to send every campaign or
+    you can put the user email in "to" parameter so he can check that the 
+    campaign is being received by recipients  
+  */
+  const recipientFirst = recipients.pop();
+
   try {
     const result = await client.messages.create(
       "sandbox180c977ad1754b20a4c83d8b1a44285c.mailgun.org",
       {
         from: "Emaily App <no-reply@emailyapp.com>",
-        to: "khinjer@gmail.com",
+        to: recipientFirst,
         bcc: recipients,
         subject: data.subject,
         text: data.text,
@@ -27,6 +34,7 @@ async function sendMail(data) {
     );
     return true;
   } catch (err) {
+    console.log(err);
     return false;
   }
 }

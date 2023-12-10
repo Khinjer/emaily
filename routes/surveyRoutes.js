@@ -48,9 +48,9 @@ router.post("/", requireLogin, requireCredit, async (req, res) => {
   const sent = await mailService.sendMail(data);
 
   if (sent) {
-    req.user.credit-=1;
+    req.user.credit -= 1;
     await survey.save();
-    const user =  await req.user.save();
+    const user = await req.user.save();
     return res.status(201).send(user);
   }
 
@@ -58,30 +58,37 @@ router.post("/", requireLogin, requireCredit, async (req, res) => {
 });
 
 router.get("/list", requireLogin, async (req, res) => {
-  const surveyList = await Survey.find({});
-  console.log(surveyList);
+  const surveyList = await Survey.find({user: req.user});
   res.status(200).json(surveyList);
 });
 
 router.get("/feedback/:surveyid/:answer/:recipient", async (req, res) => {
   const { surveyid, answer, recipient } = req.params;
 
-  const survey = await Survey.findById(surveyid);
-  if (!survey || !acceptedAnswers.includes(answer)) {
-    return res.status(400).send("bad request");
+  if (!surveyid || !answer || !recipient) {
+    return res.status(400).send("BAD REQUEST");
   }
-  const recipientData = survey.recipients.find(
-    (data) => data._id.toString() === recipient.toString()
+
+  // TODO: ADD ERROR HANDLER
+
+  const surveyResult = await Survey.updateOne(
+    {
+      _id: surveyid,
+      recipients: {
+        $elemMatch: { _id: recipient, clicked: false },
+      },
+    },
+    {
+      $inc: { [answer]: 1 },
+      $set: { "recipients.$.clicked": true, "recipients.$.answer": answer },
+    }
   );
 
-  if (recipientData.clicked === false) {
-    recipientData.clicked = true;
-    recipientData.answer = answer;
-    await survey.save();
-    res.send("Thank you for your feedback!");
-  } else {
-    res.send("You've already sent your feedback Thank you :)");
+  if (surveyResult.modifiedCount) {
+    return res.send("Thank you for your feedback!");
   }
+
+  return res.send("You've already sent your feedback Thank you :)");
 });
 
 module.exports = router;

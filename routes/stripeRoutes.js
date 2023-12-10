@@ -30,6 +30,7 @@ router.get("/session-status", requireLogin, async (req, res) => {
 
   if (session.status === "complete" && paid < 0) {
     req.user.credit += 5;
+    // TODO: refactor this paiement array in user model
     req.user.paiments.push(session.id);
     req.user = await req.user.save();
   }
