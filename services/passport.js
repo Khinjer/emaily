@@ -23,13 +23,9 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       User.findOne({ googleID: profile.id }).then((existingUser) => {
         if (existingUser) {
-          // we already have a record with the given profile ID
-          console.log("USER ALREADY IN DB!");
           done(null, existingUser);
         } else {
-          // new USER
-          console.log("NEW USER ADDED TO DB");
-          new User({ googleID: profile.id })
+          new User({ googleID: profile.id, email: profile.email })
             .save()
             .then((user) => done(null, user));
         }

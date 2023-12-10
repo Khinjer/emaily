@@ -48,6 +48,7 @@ router.post("/", requireLogin, requireCredit, async (req, res) => {
   const sent = await mailService.sendMail(data);
 
   if (sent) {
+    survey.senAt = new Date();
     req.user.credit -= 1;
     await survey.save();
     const user = await req.user.save();
@@ -57,8 +58,10 @@ router.post("/", requireLogin, requireCredit, async (req, res) => {
   return res.status(400).send("something went wrong!");
 });
 
+
+// get surveys list for current logged in user
 router.get("/list", requireLogin, async (req, res) => {
-  const surveyList = await Survey.find({user: req.user});
+  const surveyList = await Survey.find({ user: req.user });
   res.status(200).json(surveyList);
 });
 
@@ -81,8 +84,9 @@ router.get("/feedback/:surveyid/:answer/:recipient", async (req, res) => {
     {
       $inc: { [answer]: 1 },
       $set: { "recipients.$.clicked": true, "recipients.$.answer": answer },
+      updatedAt: new Date(),
     }
-  );
+  ).exec();
 
   if (surveyResult.modifiedCount) {
     return res.send("Thank you for your feedback!");
