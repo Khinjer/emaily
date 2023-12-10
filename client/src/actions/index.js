@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_USER, UPDATE_CREDIT } from "./types";
+import { FETCH_USER, UPDATE_CREDIT, FETCH_SURVEYES } from "./types";
 
 // TODO: Add ERRORS handlers
 
@@ -8,7 +8,7 @@ export const fetchUser = () => async (dispatch) => {
   dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-// dont think this is gonna useful ! TODO: delete this after
+// TODO: maybe delete this after / dont think this is gonna useful !
 export const updateCredit = (user) => (dispatch) => {
   dispatch({ type: FETCH_USER, payload: user });
   return { type: UPDATE_CREDIT, payload: user.credit };
@@ -19,4 +19,10 @@ export const submitSurvey = (values, history) => async (dispatch) => {
 
   history.push("/surveys");
   dispatch({ type: FETCH_USER, payload: res.data });
+};
+
+export const getSurveyList = () => async (dispatch) => {
+  const res = await axiox.get("/api/survey/list");
+
+  dispatch({ type: FETCH_SURVEYES, payload: data.data });
 };
