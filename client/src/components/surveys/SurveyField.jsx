@@ -1,4 +1,6 @@
 import React from "react";
+import TextField from "@mui/material/TextField";
+import { FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
 
 export default function SurveyField({
   input,
@@ -6,10 +8,11 @@ export default function SurveyField({
   meta: { error, touched },
 }) {
   return (
-    <div style={{ marginBottom: "20px" }}>
-      <label className="teal-text" style={{ fontSize: "1.2rem", fontWeight: "bold" }}>{label}</label>
-      <input {...input} />
-      <span className="red-text">{touched && error}</span>
-    </div>
+    <FormControl error={(touched && error)? true : false}  variant="standard">
+      <TextField error={(touched && error)? true : false}  label={label} variant="outlined" {...input} fullWidth/>
+      <FormHelperText id="component-error-text">
+        {touched && error}
+      </FormHelperText>
+    </FormControl>
   );
 }

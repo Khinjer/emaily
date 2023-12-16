@@ -1,21 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { reduxForm } from "redux-form";
 import SurveyForm from "./SurveyForm";
 import SurveyReview from "./SurveyReview";
 import Loader from "../Loader";
+import { Box } from "@mui/material";
 
 function SurveyNew() {
   const [showReview, setShowReview] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
-
-  const handleSubmit = async (values) => {
-    try {
-      const res = await axios.post("/api/survey", values);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const renderContent = () =>{
     if(showReview){
@@ -33,9 +25,9 @@ function SurveyNew() {
     }
 
   return (
-    <div className="container">
+    <Box>
       {renderContent()}
-    </div>
+    </Box>
   );
 }
 

@@ -1,68 +1,107 @@
-import React from "react";
+import { useState } from "react";
+import Box from "@mui/material/Box";
+import AppBar from "@mui/material/AppBar";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import LoginWithGoogleBtn from "./LoginWithGoogleBTN";
+import LeftDrawer from "./mobile/LeftDrawer";
+import { MonetizationOn } from "@mui/icons-material";
 
 function Header(props) {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerOpen(!drawerOpen);
+  };
+
   const renderContent = () => {
     switch (props.auth) {
       case null:
-        return "Loading...";
-      case false:
         return (
-          <li>
-            <a
-              className="waves-effect waves-light btn pulse"
-              href="/auth/google"
-            >
-              Login With Google
-            </a>
-          </li>
+          <Typography variant="span" color="primary">
+            Loading..."
+          </Typography>
         );
+      case false:
+        return <LoginWithGoogleBtn />;
       default:
         return (
           <>
-          <li>
-          <Link
-            to="/checkout"
-            className="checkout-btn"
-          >
-                  <button className="btn waves-effect waves-light right black" type="submit">
-        Add Credit
-        <i className="material-icons right">done</i>
-      </button>
-          </Link>
-          </li>
-            <li>
-              <span className="credit badge orange white-text">
-                Credit : {props.auth.credit}
-              </span>
-            </li>
-            <li>
-              <a className="logout" href="/auth/logout">
-                <i className="material-icons left">power_settings_new</i>Logout
-              </a>
-            </li>
+            <Button
+              component={Link}
+              to="/checkout"
+              variant="contained"
+              color="secondary"
+            >
+              Add Credit
+            </Button>
+            <Chip
+              label={` You have ${props.auth.credit} credit ! `}
+              color="secondary"
+              variant="outlined"
+              icon={<MonetizationOn />}
+            />
+            <Button
+              component="a"
+              href="/auth/logout"
+              variant="contained"
+              color="error"
+            >
+              Logout
+            </Button>
           </>
         );
     }
   };
 
   return (
-    <header>
-      <nav className="teal" style={{ fontSize: "24px" }}>
-        <div className="nav-wrapper  container">
-          <Link to={props.auth ? "/surveys" : "/"} className="left brand-logo">
-            Emaîly
-          </Link>
-          <ul
-            className="right"
-            style={{ display: "flex", alignItems: "center" }}
+    <Box flex="1" mb={7}>
+      <CssBaseline />
+      <LeftDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
+      <AppBar component="nav">
+        <Toolbar>
+          <IconButton
+            onClick={toggleDrawer()}
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+          >
+            EMAILY
+          </Typography>
+          <Stack
+            gap={3}
+            sx={{ display: { xs: "none", sm: "flex" } }}
+            direction="row"
+            alignContent="center"
           >
             {renderContent()}
-          </ul>
-        </div>
-      </nav>
-    </header>
+          </Stack>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 }
 

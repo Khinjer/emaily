@@ -2,22 +2,51 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import { useHistory } from "react-router-dom";
+import {
+  Box,
+  Card,
+  Typography,
+  CardContent,
+  Button,
+  Stack,
+  Divider,
+} from "@mui/material";
+import { Check, Send } from "@mui/icons-material";
 
 function SurveyReview(props) {
   const history = useHistory();
   const [content, setContent] = useState(null);
-  const [values, setValues] = useState(null); 
+  const [values, setValues] = useState(null);
 
   useEffect(() => {
     if (props.form.surveyForm) {
-    setValues(props.form.surveyForm.values);
+      setValues(props.form.surveyForm.values);
       let content = [];
       let i = 0;
       for (let value in props.form.surveyForm.values) {
         content.push(
-          <p key={i}>
-            {value} : {props.form.surveyForm.values[value]}
-          </p>
+          <Box>
+            <Typography
+              key={i}
+              textTransform="uppercase"
+              color="primary"
+              variant="h6"
+              gutterBottom
+            >
+              <Check color="secondary" sx={{ marginRight: 2 }} /> {value} :
+              <Typography
+                ml={5}
+                key={i}
+                variant="body2"
+                component="span"
+                color="black"
+                gutterBottom
+              >
+                {props.form.surveyForm.values[value]}
+              </Typography>
+            </Typography>
+            <Divider />
+          </Box>
         );
         i++;
       }
@@ -26,29 +55,53 @@ function SurveyReview(props) {
   }, [props]);
 
   return (
-    <div className="container">
-      <h2 className="orange-text center">SurveyReview</h2>
-      <div style={{ marginTop: "50px" }}>{content}</div>
-      <div style={{ marginTop: "50px" }}>
-        <button
+    <Box display="flex" alignItems="center" flexDirection="column">
+      <Typography
+        variant="h2"
+        color="secondary"
+        textAlign="center"
+        gutterBottom
+      >
+        Survey Review
+      </Typography>
+
+      <Card
+        elevation={3}
+        sx={{
+          borderRadius: 5,
+          marginY: 5,
+          width: "70%",
+          paddingY: 4,
+          paddingX: 1,
+        }}
+      >
+        <CardContent>{content}</CardContent>
+      </Card>
+
+      <Stack direction="row" justifyContent="space-between" width="50%">
+        <Button
           onClick={props.handleBack}
-          className="black btn-flat white-text left"
+          variant="contained"
+          color="secondary"
         >
           back
-        </button>
-        <button onClick={() => { 
-          props.submitSurvey(values, history);
+        </Button>
+        <Button
+          onClick={() => {
+            props.submitSurvey(values, history);
             props.handleShowLoader();
-           }} className="green btn-flat white-text right">
+          }}
+          variant="contained"
+          endIcon={<Send />}
+        >
           Send
-          <i className="material-icons right">send</i>
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Stack>
+    </Box>
   );
 }
 
-const mapStateToProps = ({form}) => {
+const mapStateToProps = ({ form }) => {
   return { form };
 };
 

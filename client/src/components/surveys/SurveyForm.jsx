@@ -3,7 +3,9 @@ import { reduxForm, Field } from "redux-form";
 import { Link } from "react-router-dom";
 import SurveyField from "./SurveyField";
 import validateEmails from "../../utils/validateEmails";
-
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { Stack, Typography } from "@mui/material";
 
 const Fields = [
   {
@@ -41,29 +43,43 @@ function SurveyForm(props) {
   };
 
   return (
-    <>
-      <h2 className="center orange-text">Create new Survey</h2>
-      <form style={{ marginTop: "30px" }} onSubmit={props.handleSubmit(props.handleNext)}>
-        {renderFields()}
-        <Link to="/surveys">
-          <button
-            className="btn red waves-effect waves-light left"
-            type="button"
-          >
-            Cancel
-            <i className="material-icons left">close</i>
-          </button>
-        </Link>
-        <button
-          //onClick={props.handleNext}
-          className="btn waves-effect waves-light right"
-          type="submit"
-        >
-          Next
-          <i className="material-icons right">navigate_next</i>
-        </button>
-      </form>
-    </>
+    <Box
+      sx={{
+        marginTop: 8,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography
+        variant="h3"
+        mb={5}
+        textAlign="center"
+        color="primary"
+        textTransform="uppercase"
+      >
+        Create new Survey
+      </Typography>
+      <Box
+        component="form"
+        onSubmit={props.handleSubmit(props.handleNext)}
+        sx={{ mt: 1, width: "60%" }}
+      >
+        <Stack direction="column" gap={5} mb={5}>
+          {renderFields()}
+        </Stack>
+        <Stack direction="row" justifyContent="space-between">
+          <Link to="/surveys">
+            <Button variant="contained" color="secondary" type="button">
+              Cancel
+            </Button>
+          </Link>
+          <Button onClick={props.handleNext} variant="contained" type="submit">
+            Next
+          </Button>
+        </Stack>
+      </Box>
+    </Box>
   );
 }
 
@@ -75,8 +91,9 @@ const validate = (values) => {
       errors[field.name] = `${field.label} is required`;
     }
   });
-  const invalidEmails = validateEmails(values.emails || "");
-  if (values.emails && invalidEmails.length > 0) {
+
+  const invalidEmails = validateEmails(values.recipients);
+  if (values.recipients && invalidEmails.length > 0) {
     errors.emails = `${invalidEmails.join(",")} these emails are invalid`;
   }
 

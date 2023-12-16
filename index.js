@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require('path')
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
@@ -35,6 +36,11 @@ app.use("/api/survey", surveyRouter);
 app.get("/api/current_user", (req, res) => {
   res.send(req.user);
 });
+
+
+if(process.env.NODE_ENV === "production")
+app.use('/', express.static(path.join(__dirname, 'public')))
+
 
 const PORT = process.env.PORT;
 

@@ -1,55 +1,104 @@
+import {
+  Box,
+  Button,
+  Container,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default function Landing() {
+import LoginWithGoogleBtn from "./LoginWithGoogleBTN";
+
+function Landing({ auth }) {
+  const history = useHistory();
+
+
+  if(auth){
+    history.push('/surveys');  
+  }
+
   return (
-    <>
-      <div className="container center-align">
-        <h1 className="header center orange-text">Emaîly</h1>
-        <div className="row center">
-          <h5 className="header col s12 light">Get feedback from your users</h5>
-        </div>
-        <div className="row center">
-          <Link
-            to="/checkout"
-            className="btn-large waves-effect waves-light orange"
-          >
-            Add Credit
-          </Link>
-        </div>
-      </div>
-      <div className="container">
-        <div className="section">
-          <div className="row">
-            <div className="col s12 m4">
-              <div className="icon-block">
-                <h2 className="center light-blue-text">
-                  <i className="material-icons">flash_on</i>
-                </h2>
-                <h5 className="center">Create unlimited compaigns</h5>
-              </div>
-            </div>
-
-            <div className="col s12 m4">
-              <div className="icon-block">
-                <h2 className="center light-blue-text">
-                  <i className="material-icons">group</i>
-                </h2>
-                <h5 className="center">User Experience Focused</h5>
-              </div>
-            </div>
-
-            <div className="col s12 m4">
-              <div className="icon-block">
-                <h2 className="center light-blue-text">
-                  <i className="material-icons">settings</i>
-                </h2>
-                <h5 className="center">Easy to use</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <Box
+      sx={{
+        alignItems: "center",
+        display: "flex",
+        bgcolor: "background.paper",
+        pt: 8,
+        pb: 6,
+        flexDirection: {
+          xs: "column",
+          lg: "row",
+        },
+        gap: 10,
+        height: {
+          sm: "auto",
+          md: "80vh",
+        },
+        mb: 5,
+      }}
+    >
+      <Container maxWidth="sm" flex={3}>
+        <Typography
+          component="h1"
+          variant="h2"
+          align="center"
+          color="text.primary"
+          gutterBottom
+        >
+          Emaîly
+        </Typography>
+        <Typography
+          variant="h5"
+          align="center"
+          color="text.secondary"
+          paragraph
+        >
+          Easy and fast way to Get feedback from your users. Don't waste time
+          Sign up , add credit and start sending emails to your clients!
+        </Typography>
+        <Stack
+          sx={{ pt: 4 }}
+          direction="row"
+          spacing={2}
+          justifyContent="center"
+        >
+          <LoginWithGoogleBtn />
+        </Stack>
+      </Container>
+      <Box
+        elevation={3}
+        sx={{
+          flex: {
+            xs: 6,
+            lg: 3,
+          },
+        }}
+      >
+        <Box
+          component="img"
+          sx={{
+            width: {
+              xs: 400,
+              sm: 500,
+              md: 600,
+            },
+            borderRadius: 5,
+          }}
+          src="../../public/using_laptop.jpg"
+          alt=""
+        />
+      </Box>
+    </Box>
   );
 }
+
+const mapsStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapsStateToProps, null)(Landing);

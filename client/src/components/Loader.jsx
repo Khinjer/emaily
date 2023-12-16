@@ -1,20 +1,29 @@
-import React from "react";
-import '../assets/css/loading.css';
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import { useEffect, useState } from "react";
 
-export default function Loader() {
+export default function Loader({ visible }) {
+  const [props, setProps] = useState({});
+
+  useEffect(() => {
+   
+    if (!visible) {
+      setProps({display:"none"});
+    } else {
+      setProps({display:"flex"});
+    }
+
+    console.log(props)
+  },[visible]);
+
   return (
-    <div className="preloader-wrapper big active loading">
-      <div className="spinner-layer spinner-teal-only">
-        <div className="circle-clipper left">
-          <div className="circle"></div>
-        </div>
-        <div className="gap-patch">
-          <div className="circle"></div>
-        </div>
-        <div className="circle-clipper right">
-          <div className="circle"></div>
-        </div>
-      </div>
-    </div>
+    <Box
+      justifyContent="center"
+      alignItems="center"
+      height="80vh"
+      sx={{ display: "flex", ...props }}
+    >
+      <CircularProgress />
+    </Box>
   );
 }
