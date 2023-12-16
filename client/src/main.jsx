@@ -4,7 +4,7 @@ import { legacy_createStore as createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { thunk } from "redux-thunk";
 
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import CssBaseline from '@mui/material/CssBaseline';
 
