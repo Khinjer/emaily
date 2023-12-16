@@ -21,7 +21,7 @@ export default function Footer() {
     <Container maxWidth="sm">
       <Typography variant="body1" textAlign="center" color="text.secondary">
       {'Copyright © '}
-      <Link color="inherit" to="https://app-emaily.com/">
+      <Link color="inherit" to="/">
         Emaily
       </Link>{' '}
       {new Date().getFullYear()}

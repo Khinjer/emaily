@@ -74,7 +74,7 @@ function SurveyForm(props) {
               Cancel
             </Button>
           </Link>
-          <Button onClick={props.handleNext} variant="contained" type="submit">
+          <Button variant="contained" type="submit">
             Next
           </Button>
         </Stack>

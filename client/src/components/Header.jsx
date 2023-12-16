@@ -82,12 +82,13 @@ function Header(props) {
             edge="start"
             sx={{ mr: 2, display: { sm: "none" } }}
           >
-            <MenuIcon />
+           { props.auth && <MenuIcon />}
           </IconButton>
           <Typography
             variant="h5"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            component={Link}
+            to="/"
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" }, textDecoration: "none", color: "secondary.main" }}
           >
             EMAILY
           </Typography>

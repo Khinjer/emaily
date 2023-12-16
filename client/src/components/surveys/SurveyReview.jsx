@@ -61,6 +61,7 @@ function SurveyReview(props) {
         color="secondary"
         textAlign="center"
         gutterBottom
+        mt={5}
       >
         Survey Review
       </Typography>
