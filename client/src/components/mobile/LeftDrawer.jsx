@@ -7,12 +7,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Typography, Chip } from "@mui/material";
+import { Typography } from "@mui/material";
 import { ListAlt, Logout, Paid } from "@mui/icons-material";
 
 function LeftDrawer(props) {
-  const history = useHistory();
-
   return (
     <Drawer
       anchor="left"
