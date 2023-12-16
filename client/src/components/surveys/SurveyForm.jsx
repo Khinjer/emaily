@@ -92,9 +92,10 @@ const validate = (values) => {
     }
   });
 
-  const invalidEmails = validateEmails(values.recipients);
+  const invalidEmails = validateEmails(values.recipients || "");
+
   if (values.recipients && invalidEmails.length > 0) {
-    errors.emails = `${invalidEmails.join(",")} these emails are invalid`;
+    errors.recipients = `${invalidEmails.join(",")} these emails are invalid`;
   }
 
   return errors;
