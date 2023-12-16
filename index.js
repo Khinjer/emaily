@@ -1,11 +1,11 @@
 require("dotenv").config();
-const path = require('path')
+const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
 
 // initialize all models in model folder (require a model in models/index.js to add it);
-require("./models"); 
+require("./models");
 require("./services/passport");
 const authRouter = require("./routes/authRoutes");
 const stripeRouter = require("./routes/stripeRoutes");
@@ -37,10 +37,12 @@ app.get("/api/current_user", (req, res) => {
   res.send(req.user);
 });
 
-
-if(process.env.NODE_ENV === "production")
-app.use('/', express.static(path.join(__dirname, 'public')))
-
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/dist"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+  });
+}
 
 const PORT = process.env.PORT;
 

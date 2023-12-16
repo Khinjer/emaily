@@ -1,20 +1,14 @@
-import {
-  Box,
-  Container,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-
+import img from "../assets/img/using_laptop.jpg";
 import LoginWithGoogleBtn from "./LoginWithGoogleBtn";
 
 function Landing({ auth }) {
   const history = useHistory();
 
-
-  if(auth){
-    history.push('/surveys');  
+  if (auth) {
+    history.push("/surveys");
   }
 
   return (
@@ -84,7 +78,7 @@ function Landing({ auth }) {
             },
             borderRadius: 5,
           }}
-          src="../../public/using_laptop.jpg"
+          src={img}
           alt=""
         />
       </Box>
