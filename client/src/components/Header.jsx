@@ -11,7 +11,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import LoginWithGoogleBtn from "./LoginWithGoogleBTN";
+import LoginWithGoogleBtn from "./LoginWithGoogleBtn";
 import LeftDrawer from "./mobile/LeftDrawer";
 import { MonetizationOn } from "@mui/icons-material";
 
